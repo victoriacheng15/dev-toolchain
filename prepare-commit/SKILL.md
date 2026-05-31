@@ -16,6 +16,7 @@ The `prepare-commit` skill establishes a standardized workflow for checking repo
 For autonomous agents or developer loops, execution of this skill is automated via the companion orchestration script. This script automatically runs the repository audits (`git status`, `git diff HEAD`, and `git log -n 5`) to capture state telemetry.
 
 ### Invocation Pattern
+
 The agent discovers the script path from this skill directory and executes it within the repository workspace:
 
 ```bash
@@ -23,6 +24,7 @@ bash prepare-commit/prepare-commit.sh
 ```
 
 ### Telemetry Processing
+
 Upon execution, the script runs the core workflow queries and automatically outputs the audited state and drafts the compliant `commit.md` file pre-filled with suggested git staging commands.
 
 ---
@@ -53,6 +55,7 @@ To maintain clean and precise pull requests, follow these staging practices:
 The `commit.md` file provides peer reviewers with immediate, high-level structural context.
 
 ### List of Changes Requirements
+
 - Explain the primary purpose of the changes.
 - Focus on *why* the changes matter.
 - Describe overall improvements to the system, workflow, safety, or review process.
@@ -60,6 +63,7 @@ The `commit.md` file provides peer reviewers with immediate, high-level structur
 - **Strict Constraint:** Do NOT utilize labels such as `Strategic Impact:` or `Operational Resilience:` within the bullets.
 
 ### Writing Style
+
 - Clear and concise.
 - Natural and professional.
 - Easily digestible for reviewers.
