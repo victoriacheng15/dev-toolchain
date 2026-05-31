@@ -71,11 +71,8 @@ Most platforms let you install skills by running a simple registration command p
 
 ## 📋 Platform Quick-Reference
 
-Here is how to register these tools in the leading AI developer platforms:
-
 | Platform | Registration Method | How to Do It |
 | :--- | :--- | :--- |
-| **Claude Code** | Workspace Auto-Discovery | Open this repository folder using `claude` in your terminal. The tool is loaded automatically! |
-| **Agy** | User Directory / Project Path | **Project-Specific:** Copy the folder into your project agent folder: `cp -r [tool-name] .agents/skills/`<br>**Global:** Copy into the global skills path: `cp -r [tool-name] ~/.antigravity/skills/` |
+| **Agy** | User Directory / Project Path | **Project-Specific:** Copy the folder into your project agent folder: `cp -r [tool-name] .agents/skills/`<br>**Global:** Copy into the global skills path: `cp -r [tool-name] ~/.gemini/antigravity-cli/skills/[tool-name]` |
 | **Codex** | Chat Interface Installer | Type `$skill-installer` in the Codex chat window and provide the folder path to install. |
 | **GitHub Copilot** | GitHub CLI Extension | Install the skill directly using the GitHub CLI: <br>`gh skill install ./[tool-name]` |
