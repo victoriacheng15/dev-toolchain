@@ -27,9 +27,9 @@ This script scans the `docs/adr/` directory, detects the next sequential ID, and
 
 Every ADR must transition through defined, explicit lifecycle states:
 
-*   **Proposed:** The decision is currently under active discussion or review.
-*   **Accepted:** The decision has been approved by the core engineering team and is active.
-*   **Superseded:** The decision has been replaced by a newer ADR. When superseding, you must update the older ADR's metadata block to point directly to the replacing ADR (e.g., `Superseded by ADR-005`).
+- **Proposed:** The decision is currently under active discussion or review.
+- **Accepted:** The decision has been approved by the core engineering team and is active.
+- **Superseded:** The decision has been replaced by a newer ADR. When superseding, you must update the older ADR's metadata block to point directly to the replacing ADR (e.g., `Superseded by ADR-005`).
 
 ---
 
@@ -74,7 +74,7 @@ All ADR markdown files (e.g., `docs/adr/001-use-vitest-for-testing.md`) must str
 
 Prior to committing a new ADR, verify that:
 
-1.  [ ] **State Specified:** The metadata section contains an allowed lifecycle state.
-2.  [ ] **Chronology Checked:** The next sequential integer index has been reserved using the orchestration script.
-3.  [ ] **Consequences Documented:** Both positive benefits and negative drawbacks are explicitly listed.
-4.  [ ] **Traceability Maintained:** If this ADR supersedes an existing one, the old ADR has been edited to change its status to "Superseded by ADR-XXX".
+1. [ ] **State Specified:** The metadata section contains an allowed lifecycle state.
+2. [ ] **Chronology Checked:** The next sequential integer index has been reserved using the orchestration script.
+3. [ ] **Consequences Documented:** Both positive benefits and negative drawbacks are explicitly listed.
+4. [ ] **Traceability Maintained:** If this ADR supersedes an existing one, the old ADR has been edited to change its status to "Superseded by ADR-XXX".
