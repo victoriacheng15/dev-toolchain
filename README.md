@@ -1,15 +1,28 @@
 # 🛠️ Dev Toolchain
 
-This repository is a collection of helper tools and guides for coding. It helps developers and AI coding assistants automate boring tasks, stage changes cleanly, and keep git commit history neat.
+The **Dev Toolchain** is a portable library of standardized AI agent skills and automation workflows. Built under the `SKILL.md` open standard, it establishes a modular, language-agnostic platform to orchestrate consistent developer workflows, enforce commit compliance, and coordinate structured incident root cause analysis across diverse LLM clients.
 
 ---
 
 ## 🚀 How It Works
 
-This repository is built as a simple, modular library:
+This repository is built as a robust, modular library:
 
 - **Every tool has a guide:** The manual (`SKILL.md`) tells both developers and AI assistants how to use the tool.
-- **Helper scripts automate tasks:** Some tools include an optional shell script to handle terminal commands automatically.
+- **Orchestration scripts automate tasks:** Some tools include an optional shell script to handle terminal commands automatically.
+
+---
+
+## 🛠️ Available Skills
+
+The toolchain contains the following core engineering skills:
+
+| Skill | Directory | Primary Purpose | Status |
+| :--- | :--- | :--- | :--- |
+| **Commit Prepper** | [`prepare-commit/`](prepare-commit/SKILL.md) | Enforces staging hygiene, repository state audits, and drafts semantic commit specs. | **Active** |
+| **ADR Generator** | [`adr-gen/`](adr-gen/SKILL.md) | Standardizes architectural pivots and trade-off matrices with immutable indexing. | **Active** |
+| **Test Scaffolding** | [`generate-tests/`](generate-tests/SKILL.md) | Scaffolds language-specific, table-driven unit test suites without external AST dependencies. | **Active** |
+| **RCA Generator** | [`rca-gen/`](rca-gen/SKILL.md) | Standardizes incident post-mortem documentation and timelines under `docs/incidents/`. | **Active** |
 
 ---
 
@@ -25,24 +38,24 @@ Every tool inside this repository follows a simple pattern:
 
 ### 📖 The Manual (`SKILL.md`)
 
-This is a simple text file that contains:
+This is a declarative text file that contains:
 
 - What the tool does.
-- The rules and steps to follow.
-- A simple checklist to verify that everything works.
+- The rules and constraints to follow.
+- A checklist to verify that everything works.
 
 ### ⚡ The Script (`[tool-name].sh` - Optional)
 
-If present, the script runs the terminal commands for you automatically so you do not have to type them out by hand. Diffs and log commands are set to output raw text directly to prevent terminal page hangs.
+If present, the automation script runs the terminal audits and orchestration commands automatically. Diffs and log commands are set to output raw text directly to prevent terminal page hangs.
 
 ---
 
-## 🔄 Flow Diagram: Lifecycle of a Tool
+## 🔄 Orchestration Flow: Lifecycle of a Skill
 
 ```mermaid
 graph TD
     A["Code changes are made"] --> B["AI or Developer reads SKILL.md manual"]
-    B --> C{"Does a helper script exist?"}
+    B --> C{"Does an automation script exist?"}
     C -- Yes --> D["The script runs the commands automatically"]
     C -- No --> E["Follow the manual rules directly"]
     D --> F["Telemetry logs are printed to your screen"]
