@@ -13,7 +13,7 @@ The `prepare-commit` skill establishes a standardized workflow for checking repo
 
 ## Automated Execution
 
-For autonomous agents or developer loops, execution of this skill is automated via the companion orchestration script. This script automatically runs the repository audits (`git status`, `git diff HEAD`, and `git log -n 5`) to capture state telemetry.
+For autonomous agents or developer loops, execution of this skill is automated via the companion orchestration script. This script automatically runs the repository audits (`git status`, `git diff HEAD`, and `git log -n 3`) to capture state telemetry.
 
 ### Invocation Pattern
 
@@ -89,7 +89,11 @@ The `commit.md` file provides peer reviewers with immediate, high-level structur
 - [ ] [At least one manual validation step that still needs to be completed]
 
 ## Execution Commands
-[Include only the exact git commands used to create the branch, stage files, and commit them. Do not include commit.md in the staged files.]
+[Include only the exact git commands used to:
+1. git switch -c <branch-name>
+2. git add <paths>
+3. git commit -m "<type>(<scope>): <subject>"
+Do not include commit.md in the staged files.]
 ```
 
 ---
@@ -102,3 +106,4 @@ Prior to completing the staging and commit phase, verify that:
 2. [ ] **Metadata Compliance:** The `commit.md` file follows the mandatory structure and does not contain illegal labels.
 3. [ ] **Commit Message Boundary:** The proposed commit subject line is semantic and under 72 characters.
 4. [ ] **Exclusion Verified:** The `commit.md` file and planning documents are excluded from the staging commands.
+5. [ ] **Execution Commands Documented:** The execution commands section lists the three required git commands (switch, add, and commit).
