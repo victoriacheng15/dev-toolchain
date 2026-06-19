@@ -39,11 +39,12 @@ Commit messages must strictly adhere to the following semantic layout:
 
 ---
 
-## Staging Guidelines
+## Branching & Staging Guidelines
 
-To maintain clean and precise pull requests, follow these staging practices:
+To maintain clean and precise pull requests, follow these practices:
 
-- **Folder-Level Staging:** Prefer adding directories when it is safe and helps keep staging clean. Prioritize directory-level `git add <dir>` commands when the directory contains only changes intended for the target commit.
+- **Branch Uniqueness:** The target branch name must not be the same as the previous (or current) branch.
+- **Folder-Level Staging (Critical Priority):** Prefer adding directories when it is safe and helps keep staging clean. Prioritize directory-level `git add <dir>` commands when the directory contains only changes intended for the target commit.
 - **Path Precision:** Use specific, file-level paths when granular precision is required.
 - **Exclusion Rule:** Avoid broad or wildcard adds (`git add .` or `git add -A`) if they risk staging unrelated changes, temporary files, or local secrets.
 - **Strict Constraint:** Do not include planning documents or `commit.md` itself in the final execution staging commands.
@@ -54,19 +55,24 @@ To maintain clean and precise pull requests, follow these staging practices:
 
 The `commit.md` file provides peer reviewers with immediate, high-level structural context.
 
-### List of Changes Requirements
+### List of Changes & Verification Requirements
 
-- Explain the primary purpose of the changes.
-- Focus on *why* the changes matter.
-- Describe overall improvements to the system, workflow, safety, or review process.
-- Avoid low-level, line-by-line technical details.
-- **Strict Constraint:** Do NOT utilize labels such as `Strategic Impact:` or `Operational Resilience:` within the bullets.
-
-### Writing Style
-
-- Clear and concise.
-- Natural and professional.
-- Easily digestible for reviewers.
+1. **Writing Style**:
+   - Clear and concise.
+   - Natural and professional.
+   - Easily digestible for reviewers.
+2. **List of Changes**:
+   - **Strategic & High-Level Context**:
+     - Focus on *why* the changes matter.
+     - Explain the primary purpose of the changes.
+   - **System & Process Impact**:
+     - Describe overall improvements to the system, workflow, safety, or review process.
+     - Avoid low-level, line-by-line technical details.
+     - **Strict Constraint:** Do NOT utilize labels such as `Strategic Impact:` or `Operational Resilience:` within the bullets.
+3. **Verification**:
+   - **Keep it Short and Simple**:
+     - Only include the command(s) that verify the state on test, formatting, linting, or any specific part of the code that changed.
+     - Do not include the final results of the commands.
 
 ### Mandatory Structure for commit.md
 
@@ -107,3 +113,4 @@ Prior to completing the staging and commit phase, verify that:
 3. [ ] **Commit Message Boundary:** The proposed commit subject line is semantic and under 72 characters.
 4. [ ] **Exclusion Verified:** The `commit.md` file and planning documents are excluded from the staging commands.
 5. [ ] **Execution Commands Documented:** The execution commands section lists the three required git commands (switch, add, and commit).
+6. [ ] **Branch Uniqueness Verified:** The new branch name is not the same as the previous (or current) branch.

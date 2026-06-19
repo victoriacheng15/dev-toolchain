@@ -91,7 +91,12 @@ else
 fi
 
 # Recommended Branch name
+current_branch=$(git branch --show-current 2>/dev/null || git rev-parse --abbrev-ref HEAD)
 branch_name="${change_type}/prep-${scope}"
+if [[ "$branch_name" == "$current_branch" ]]; then
+    branch_name="${branch_name}-next"
+    echo -e "${YELLOW}${BOLD}Warning:${NC} Recommended branch name matches the current branch. Renamed to: ${branch_name}"
+fi
 # Recommended Commit Message (Ensure under 72 characters)
 commit_msg="${change_type}(${scope}): initialize work and refine metadata definitions"
 if [ ${#commit_msg} -gt 72 ]; then
@@ -119,7 +124,7 @@ cat << EOF > commit.md
 
 ## Execution Commands
 \`\`\`bash
-git checkout -b ${branch_name}
+git switch -c ${branch_name}
 ${staging_command}
 git commit -m "${commit_msg}"
 \`\`\`
