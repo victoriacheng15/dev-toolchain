@@ -1,35 +1,48 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Guard: Ensure title is provided
+# Guard: Ensure task description is provided
 if [ $# -lt 1 ]; then
     echo "Usage: $0 <task-description>"
     exit 1
 fi
 
-TASK_TITLE="$1"
-
-# Convert task title to uppercase and replace non-alphanumeric characters with underscores
-TASK=$(echo "$TASK_TITLE" | tr '[:lower:]' '[:upper:]' | sed -E 's/[^A-Z0-9]+/_/g' | sed -E 's/^_+|_+$//g')
-PLAN_FILE="PLAN-${TASK}.md"
-
-# Collision Prevention
-if [ -f "$PLAN_FILE" ]; then
-    echo "Error: '${PLAN_FILE}' already exists in the workspace root. Collision prevented." >&2
-    exit 1
-fi
-
+TASK_DESC="$1"
 CURRENT_DATE=$(date +%Y-%m-%d)
 
-cat <<EOF > "$PLAN_FILE"
-# Implementation Plan: ${TASK_TITLE}
+# Find the most recently modified PLAN-*.md file in the current directory
+PLAN_FILE=$(find . -maxdepth 1 -name "PLAN-*.md" -printf '%T@ %p\n' | sort -n | tail -n 1 | cut -d' ' -f2- || true)
+
+if [ -n "$PLAN_FILE" ]; then
+    PLAN_FILE=${PLAN_FILE#./}
+fi
+
+# Revision Handling: Append if a plan already exists
+if [ -n "$PLAN_FILE" ] && [ -f "$PLAN_FILE" ]; then
+    # Ensure Revisions section exists
+    if ! grep -q "^## Revisions & Updates" "$PLAN_FILE"; then
+        echo -e "\n## Revisions & Updates\n" >> "$PLAN_FILE"
+    fi
+    echo "- [ ] **User Request (${CURRENT_DATE}):** ${TASK_DESC}" >> "$PLAN_FILE"
+    echo "Success: Appended revision request to existing plan at '$PLAN_FILE'"
+    exit 0
+fi
+
+# Scaffolding: Create new plan file
+# Extract first 5 words of description to generate a clean task slug for the filename
+FIRST_WORDS=$(echo "$TASK_DESC" | cut -d' ' -f1-5)
+TASK=$(echo "$FIRST_WORDS" | tr '[:lower:]' '[:upper:]' | sed -E 's/[^A-Z0-9]+/_/g' | sed -E 's/^_+|_+$//g')
+NEW_PLAN_FILE="PLAN-${TASK}.md"
+
+cat <<EOF > "$NEW_PLAN_FILE"
+# Implementation Plan: ${FIRST_WORDS}
 
 - **Status:** In Progress
 - **Date:** ${CURRENT_DATE}
 
 ## Goal
 
-${TASK_TITLE}
+${TASK_DESC}
 
 ## Approach & Affected Files
 
@@ -76,7 +89,10 @@ To facilitate incremental review and parallel development, the implementation is
 ## Open Questions & Risks
 
 - [List any blockers or questions requiring feedback before execution]
+
+## Revisions & Updates
+
 EOF
 
-echo "Success: Created execution plan at '$PLAN_FILE'"
+echo "Success: Created execution plan skeleton at '$NEW_PLAN_FILE'"
 echo "To view your active workspace status, run: git status"
