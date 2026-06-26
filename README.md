@@ -23,6 +23,7 @@ The toolchain contains the following core engineering skills:
 | **ADR Generator** | [`adr-gen/`](adr-gen/SKILL.md) | Standardizes architectural pivots and trade-off matrices with immutable indexing. | **Active** |
 | **Tests Generator** | [`tests-gen/`](tests-gen/SKILL.md) | Scaffolds language-specific, table-driven unit test suites without external AST dependencies. | **Active** |
 | **Plan Generator** | [`plan-gen/`](plan-gen/SKILL.md) | Scaffolds a local plan.md template to sequence PRs and coordinate execution steps to prevent goal drift. | **Active** |
+| **Code Review Auditor** | [`fresh-eye/`](fresh-eye/SKILL.md) | Performs pre-commit code quality, safety, and test coverage sanity audits on local diffs. | **Active** |
 | **RCA Generator** | [`rca-gen/`](rca-gen/SKILL.md) | Standardizes incident post-mortem documentation and timelines under `docs/incidents/`. | **Active** |
 
 ---
