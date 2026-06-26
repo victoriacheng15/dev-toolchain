@@ -1,5 +1,5 @@
 ---
-name: generate-tests
+name: tests-gen
 description: Programmatically scaffolds language-specific unit test suites with table-driven assertions for Go, TS, Python, and Rust.
 ---
 
@@ -16,7 +16,7 @@ Unit testing is the cornerstone of system reliability, but writing boilerplate s
 To scaffold a new test file for a target source file, execute the template generator from the root of the workspace:
 
 ```bash
-./generate-tests/generate-tests.sh path/to/source_file.ext
+./tests-gen/tests-gen.sh path/to/source_file.ext
 ```
 
 This script parses the target file for exports, receiver methods, and function signatures, creates the corresponding test file in the same directory, and outputs a table-driven test skeleton.
