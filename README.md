@@ -8,7 +8,7 @@ The **Dev Toolchain** is a portable library of standardized AI agent skills and 
 
 This repository is built as a robust, modular library:
 
-- **Every tool has a guide:** The manual (`SKILL.md`) tells both developers and AI assistants how to use the tool.
+- **Every tool has a guide:** The manual (`SKILL.md`) tells AI agents how to execute the skill.
 - **Orchestration scripts automate tasks:** Some tools include an optional shell script to handle terminal commands automatically.
 
 ---
@@ -22,6 +22,7 @@ The toolchain contains the following core engineering skills:
 | **Commit Prepper** | [`prepare-commit/`](prepare-commit/SKILL.md) | Enforces staging hygiene, repository state audits, and drafts semantic commit specs. | **Active** |
 | **ADR Generator** | [`adr-gen/`](adr-gen/SKILL.md) | Standardizes architectural pivots and trade-off matrices with immutable indexing. | **Active** |
 | **Tests Generator** | [`tests-gen/`](tests-gen/SKILL.md) | Scaffolds language-specific, table-driven unit test suites without external AST dependencies. | **Active** |
+| **Plan Generator** | [`plan-gen/`](plan-gen/SKILL.md) | Scaffolds a local plan.md template to sequence PRs and coordinate execution steps to prevent goal drift. | **Active** |
 | **RCA Generator** | [`rca-gen/`](rca-gen/SKILL.md) | Standardizes incident post-mortem documentation and timelines under `docs/incidents/`. | **Active** |
 
 ---
@@ -52,15 +53,28 @@ If present, the automation script runs the terminal audits and orchestration com
 
 ## 🔄 Orchestration Flow: Lifecycle of a Skill
 
-```mermaid
-graph TD
-    A["Code changes are made"] --> B["AI or Developer reads SKILL.md manual"]
-    B --> C{"Does an automation script exist?"}
-    C -- Yes --> D["The script runs the commands automatically"]
-    C -- No --> E["Follow the manual rules directly"]
-    D --> F["Telemetry logs are printed to your screen"]
-    E --> G["The task is completed cleanly!"]
-    F --> G
+```text
+                  [ Code changes are made ]
+                             │
+                             ▼
+              [ AI agent reads SKILL.md manual ]
+                             │
+                             ▼
+             /───────────────────────────────\
+            <  Does an automation script exist? >
+             \───────────────────────────────/
+                       /           \
+                 Yes  /             \  No
+                     ▼               ▼
+        [ Run script automatically ]   [ Follow manual rules directly ]
+                     │                             │
+                     ▼                             │
+        [ Telemetry logs printed ]                 │
+                     │                             │
+                     \              ┌──────────────┘
+                      \            /
+                       ▼          ▼
+            [ Task is completed cleanly! ]
 ```
 
 ---
