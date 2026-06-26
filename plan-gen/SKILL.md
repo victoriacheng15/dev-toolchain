@@ -1,25 +1,33 @@
 ---
 name: plan-gen
-description: Scaffolds a local plan.md template to sequence PRs and coordinate execution steps to prevent goal drift.
+description: Scaffolds a local PLAN-[TASK].md template to sequence PRs and coordinate execution steps to prevent goal drift.
 ---
 
 # Agent Execution Planning
 
 ## Overview
 
-Complex software engineering tasks require systematic planning to prevent code duplication, architectural regressions, and AI agent execution drift. This skill automates the creation of a local, non-committed `PLAN-[TASK].md` file in the workspace root to serve as an execution anchor. It focuses on partitioning changes into logical, sequential Pull Requests (PRs) to simplify code review and ensure incremental stability.
+Complex software engineering tasks require systematic planning to prevent code duplication, architectural regressions, and AI agent execution drift. This skill automates the creation and revision of a local, non-committed `PLAN-[TASK].md` file in the workspace root to serve as an execution anchor. It focuses on partitioning changes into logical, sequential Pull Requests (PRs) to simplify code review and ensure incremental stability.
 
 ---
 
 ## Automated Execution
 
-To scaffold a new implementation plan, execute the script from the root of the workspace:
+When the user requests a new plan or a plan revision (e.g., `/plan-gen "detailed request"`), the AI agent must:
+
+1. Execute the script from the root of the workspace using the user's detailed request as the single argument:
 
 ```bash
-./plan-gen/plan-gen.sh "Description of the target task"
+./plan-gen/plan-gen.sh "User's detailed request"
 ```
 
-If the target file already exists, the script will fail with a non-zero exit status to prevent silent overwriting.
+---
+
+## Script Behavior
+
+* **Initialization:** If `PLAN-[TASK].md` does not exist, the script creates the file pre-populated with the planning template.
+* **Revision:** If `PLAN-[TASK].md` already exists, the script appends the user's detailed request as a checklist item under `## Revisions & Updates` at the bottom of the file.
+* **Agent Refinement:** After running the script, the AI agent must read the file and update the **Goal**, **Approach**, **Stacked PRs Strategy**, and **Detailed Execution Checklist** to reflect the new instructions.
 
 ---
 
@@ -79,6 +87,10 @@ To facilitate incremental review and parallel development, the implementation is
 ## Open Questions & Risks
 
 - [List any blockers or questions requiring feedback before execution]
+
+## Revisions & Updates
+
+- [ ] **User Request ([YYYY-MM-DD]):** [Appended user instructions to be integrated into the main checklist]
 ```
 
 ---
