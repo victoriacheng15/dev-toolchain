@@ -1,6 +1,18 @@
 ---
 name: rca-gen
 description: Guides the creation and management of Root Cause Analysis (RCA) records with chronological indexing.
+version: 1.0.0
+license: MIT
+inputs:
+  incident_title:
+    type: string
+    description: The title of the incident / outage.
+    required: true
+outputs:
+  - "docs/incidents/[num]-[title-slug].md"
+on_failure:
+  policy: retry
+  max_retries: 3
 ---
 
 # Root Cause Analysis (RCA)

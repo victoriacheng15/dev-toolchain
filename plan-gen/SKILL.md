@@ -1,6 +1,18 @@
 ---
 name: plan-gen
 description: Scaffolds a local PLAN-[TASK].md template to sequence PRs and coordinate execution steps to prevent goal drift.
+version: 1.0.0
+license: MIT
+inputs:
+  task_description:
+    type: string
+    description: Detailed description of the task or request.
+    required: true
+outputs:
+  - "PLAN-[TASK].md"
+on_failure:
+  policy: retry
+  max_retries: 3
 ---
 
 # Agent Execution Planning

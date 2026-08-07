@@ -1,6 +1,14 @@
 ---
 name: prepare-commit
 description: Prepares standardized commits by checking repository state, enforcing staging hygiene, and drafting structured commit.md specs.
+version: 1.0.0
+license: MIT
+inputs: {}
+outputs:
+  - commit.md
+on_failure:
+  policy: retry
+  max_retries: 3
 ---
 
 # Prepare Commit

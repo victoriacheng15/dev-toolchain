@@ -1,6 +1,13 @@
 ---
 name: fresh-eye
 description: Analyzes git diffs to perform local code quality reviews, outputting feedback directly to standard output.
+version: 1.0.0
+license: MIT
+inputs: {}
+outputs: []
+on_failure:
+  policy: retry
+  max_retries: 3
 ---
 
 # Code Review Sanity Checks
