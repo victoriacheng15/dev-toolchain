@@ -1,6 +1,18 @@
 ---
 name: tests-gen
 description: Programmatically scaffolds language-specific unit test suites with table-driven assertions for Go, TS, Python, and Rust.
+version: 1.0.0
+license: MIT
+inputs:
+  source_file:
+    type: string
+    description: Path to the target source code file.
+    required: true
+outputs:
+  - "[source_file]_test.[ext]"
+on_failure:
+  policy: retry
+  max_retries: 3
 ---
 
 # Unit Test Scaffolding

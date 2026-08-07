@@ -1,6 +1,18 @@
 ---
 name: adr-gen
 description: Guides the creation and management of Architectural Decision Records (ADRs) with immutable indexing.
+version: 1.0.0
+license: MIT
+inputs:
+  adr_title:
+    type: string
+    description: The title of the architectural decision.
+    required: true
+outputs:
+  - "docs/adr/[num]-[title-slug].md"
+on_failure:
+  policy: retry
+  max_retries: 3
 ---
 
 # Architectural Decision Records (ADR)
