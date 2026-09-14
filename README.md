@@ -9,7 +9,6 @@ The **Dev Toolchain** is a portable library of standardized AI agent skills and 
 This repository is built as a robust, modular library:
 
 - **Every tool has a guide:** The manual (`SKILL.md`) tells AI agents how to execute the skill.
-- **Orchestration scripts automate tasks:** Some tools include an optional shell script to handle terminal commands automatically.
 
 ---
 
@@ -24,7 +23,9 @@ The toolchain contains the following core engineering skills:
 | **Tests Generator** | [`tests-gen/`](tests-gen/SKILL.md) | Scaffolds language-specific, table-driven unit test suites without external AST dependencies. | **Active** |
 | **Plan Generator** | [`plan-gen/`](plan-gen/SKILL.md) | Scaffolds a local plan.md template to sequence PRs and coordinate execution steps to prevent goal drift. | **Active** |
 | **Code Review Auditor** | [`fresh-eye/`](fresh-eye/SKILL.md) | Performs pre-commit code quality, safety, and test coverage sanity audits on local diffs. | **Active** |
+| **PR Review & Verification** | [`pr-review/`](pr-review/SKILL.md) | Compares diffs against a base branch, verifies tests and builds, and drafts review reports. | **Active** |
 | **RCA Generator** | [`rca-gen/`](rca-gen/SKILL.md) | Standardizes incident post-mortem documentation and timelines under `docs/incidents/`. | **Active** |
+| **Issue Triage Generator** | [`triage-gen/`](triage-gen/SKILL.md) | Scaffolds local reproduction, fix, and verification tracking for upstream issues. | **Active** |
 
 ---
 
@@ -34,8 +35,7 @@ Every tool inside this repository follows a simple pattern:
 
 ```text
 [tool-name]/
-├── SKILL.md            # [Required] The manual file telling the agent what to do
-└── [tool-name].sh      # [Optional] The script that runs the commands automatically
+└── SKILL.md            # The manual file telling the agent what to do
 ```
 
 ### 📖 The Manual (`SKILL.md`)
@@ -45,10 +45,6 @@ This is a declarative text file that contains:
 - What the tool does.
 - The rules and constraints to follow.
 - A checklist to verify that everything works.
-
-### ⚡ The Script (`[tool-name].sh` - Optional)
-
-If present, the automation script runs the terminal audits and orchestration commands automatically. Diffs and log commands are set to output raw text directly to prevent terminal page hangs.
 
 ---
 
@@ -61,21 +57,10 @@ If present, the automation script runs the terminal audits and orchestration com
               [ AI agent reads SKILL.md manual ]
                              │
                              ▼
-             /───────────────────────────────\
-            <  Does an automation script exist? >
-             \───────────────────────────────/
-                       /           \
-                 Yes  /             \  No
-                     ▼               ▼
-        [ Run script automatically ]   [ Follow manual rules directly ]
-                     │                             │
-                     ▼                             │
-        [ Telemetry logs printed ]                 │
-                     │                             │
-                     \              ┌──────────────┘
-                      \            /
-                       ▼          ▼
-            [ Task is completed cleanly! ]
+              [ Follow manual rules directly ]
+                             │
+                             ▼
+               [ Task is completed cleanly! ]
 ```
 
 ---
