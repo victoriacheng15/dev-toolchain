@@ -23,15 +23,47 @@ Root Cause Analysis (RCA) is a structured process to identify the underlying vul
 
 ---
 
-## Automated Execution
+## Execution Workflow
 
-To create a new, auto-incremented RCA skeleton, execute the companion template generator from the root of the workspace:
+When documenting an incident, follow these procedural steps:
 
-```bash
-./rca-gen/new-rca.sh "Title of the Incident"
-```
+1. **Resolve Next Index:**
+   - Ensure the `docs/incidents/` directory exists.
+   - Scan `docs/incidents/` for existing files matching `[0-9]*-*.md`.
+   - Identify the highest decimal integer prefix. Increment by 1 (or start at 1 if none exist).
+   - Format the index with 3-digit zero padding (e.g., `001`, `002`).
 
-This script scans the `docs/incidents/` directory, detects the next sequential ID, and generates a pre-formatted template with standard metadata headers.
+2. **Slugify Title:**
+   - Convert the incident title to lowercase.
+   - Replace whitespace and special characters with single hyphens.
+   - Strip leading or trailing hyphens to produce `[title-slug]`.
+   - Target path: `docs/incidents/[num]-[title-slug].md`.
+
+3. **Generate RCA File:**
+   - Scaffold the new RCA file using the mandatory schema below.
+   - Populate the header with the padded index, title, current date (`YYYY-MM-DD`), initial severity (`Medium` by default), and author name.
+   - Set the initial status to `Investigating`.
+
+4. **Update Repository Index:**
+   - Check if `docs/incidents/README.md` exists. If not, initialize it with the index table header:
+
+     ```markdown
+     # Root Cause Analysis (RCA)
+
+     This directory contains the root cause analyses recorded for system incidents.
+
+     | ID | Title | Date | Severity | Status |
+     | :--- | :--- | :--- | :--- | :--- |
+     ```
+
+   - Append the new entry row to `docs/incidents/README.md`:
+
+     ```markdown
+     | [num] | [[title]](./[num]-[title-slug].md) | [YYYY-MM-DD] | [Severity] | Investigating |
+     ```
+
+5. **Populate Incident Analysis:**
+   - Fill in Summary, Timeline, Root Cause Analysis, Lessons Learned, Action Items, and Verification.
 
 ---
 
@@ -96,6 +128,7 @@ What went well? What went wrong? What reduced the impact?
 Prior to committing a new RCA, verify that:
 
 1. [ ] **State Specified:** The metadata section contains an allowed lifecycle state.
-2. [ ] **Chronology Checked:** The next sequential integer index has been reserved using the orchestration script.
+2. [ ] **Chronology Checked:** The next sequential integer index has been reserved by inspecting `docs/incidents/`.
 3. [ ] **Root Cause Analyzed:** The technical explanation is explicitly written out to avoid superficial blame.
 4. [ ] **Action Items Assigned:** Every action item in mitigation or prevention has clear, actionable definitions.
+5. [ ] **Index Table Synchronized:** A corresponding row has been added to `docs/incidents/README.md`.
