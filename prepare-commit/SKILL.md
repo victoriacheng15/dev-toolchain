@@ -19,21 +19,25 @@ The `prepare-commit` skill establishes a standardized workflow for checking repo
 
 ---
 
-## Automated Execution
+## Execution Workflow
 
-For autonomous agents or developer loops, execution of this skill is automated via the companion orchestration script. This script automatically runs the repository audits (`git status`, `git diff HEAD`, and `git log -n 3`) to capture state telemetry.
+When preparing a commit, follow these procedural steps:
 
-### Invocation Pattern
+1. **Audit Repository Baseline:**
+   - Execute `git status` to identify untracked, staged, and unstaged modifications.
+   - Execute `git diff HEAD --stat` to review the scope and modified file footprint.
+   - Execute `git log -n 3 --oneline` to review recent commit history for style and convention context.
 
-The agent discovers the script path from this skill directory and executes it within the repository workspace:
+2. **Analyze Scope and Semantic Type:**
+   - Determine the primary affected directory or subsystem to establish the commit `scope`.
+   - Select the semantic change `type` (`feat`, `fix`, `refactor`, `chore`, `docs`).
+   - Choose a unique branch name (must not match the current branch).
+   - Identify clean staging paths (prioritize directory-level paths when safe).
 
-```bash
-bash prepare-commit/prepare-commit.sh
-```
-
-### Telemetry Processing
-
-Upon execution, the script runs the core workflow queries and automatically outputs the audited state and drafts the compliant `commit.md` file pre-filled with suggested git staging commands.
+3. **Draft `commit.md` Specification:**
+   - Create `commit.md` in the workspace root following the mandatory structure below.
+   - Verify the subject line adheres to semantic conventions and is under 72 characters.
+   - Format the execution commands section inside a bash code block.
 
 ---
 
@@ -80,11 +84,11 @@ The `commit.md` file provides peer reviewers with immediate, high-level structur
 3. **Verification**:
    - **Keep it Short and Simple**:
      - Only include the command(s) that verify the state on test, formatting, linting, or any specific part of the code that changed.
-     - Do not include the final results of the commands.
+     - Do not include the final results of the commands (e.g., use "- [x] `make test`" without appending test counts, status codes, or terminal logs).
 
 ### Mandatory Structure for commit.md
 
-```markdown
+````markdown
 # Git Commit Info
 
 ## PR Description
@@ -103,12 +107,13 @@ The `commit.md` file provides peer reviewers with immediate, high-level structur
 - [ ] [At least one manual validation step that still needs to be completed]
 
 ## Execution Commands
-[Include only the exact git commands used to:
-1. git switch -c <branch-name>
-2. git add <paths>
-3. git commit -m "<type>(<scope>): <subject>"
-Do not include commit.md in the staged files.]
+
+```bash
+git switch -c <branch-name>
+git add <paths>
+git commit -m "<type>(<scope>): <subject>"
 ```
+````
 
 ---
 
