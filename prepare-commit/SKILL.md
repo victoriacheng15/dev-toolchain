@@ -101,10 +101,7 @@ The `commit.md` file provides peer reviewers with immediate, high-level structur
 - [One bullet describing system, workflow, safety, or review benefit]
 
 ### Verification
-[Use Markdown checklist syntax for verification items. Verification items must directly verify the current PR's scope. Treat the items below as examples, not required slots to fill mechanically.]
-
-- [ ] [At least one automated test or check that was completed]
-- [ ] [At least one manual validation step that still needs to be completed]
+- [ ] [List only the verification commands or manual checks executed for this PR's specific diff. Omit if no checks apply.]
 
 ## Execution Commands
 
