@@ -1,100 +1,64 @@
 # 🛠️ Dev Toolchain
 
-The **Dev Toolchain** is a portable library of standardized AI agent skills and automation workflows. Built under the `SKILL.md` open standard, it establishes a modular, language-agnostic platform to orchestrate consistent developer workflows, enforce commit compliance, and coordinate structured incident root cause analysis across diverse LLM clients.
+The **Dev Toolchain** is a portable library of standardized engineering skills and automation workflows for AI coding agents.
 
----
-
-## 🚀 How It Works
-
-This repository is built as a robust, modular library:
-
-- **Every tool has a guide:** The manual (`SKILL.md`) tells AI agents how to execute the skill.
+Built on the open `SKILL.md` specification, it replaces ad-hoc conversational prompting with declarative, deterministic execution rules. The toolchain enforces strict engineering hygiene across any LLM client: staging and commit discipline, immutable Architectural Decision Records (ADRs), table-driven unit test generation, and structured incident post-mortems.
 
 ---
 
 ## 🛠️ Available Skills
 
-The toolchain contains the following core engineering skills:
+The toolchain organizes skills across four core phases of the engineering lifecycle:
+
+### 📐 Architecture & Planning
+
+| Skill | Directory | Primary Purpose | Status |
+| :--- | :--- | :--- | :--- |
+| **ADR Generator** | [`adr-gen/`](adr-gen/SKILL.md) | Standardizes architectural pivots and trade-off matrices with immutable indexing. | **Active** |
+| **Plan Generator** | [`plan-gen/`](plan-gen/SKILL.md) | Scaffolds a local execution plan template to sequence PRs and prevent goal drift. | **Active** |
+
+### 🧪 Quality & Testing
+
+| Skill | Directory | Primary Purpose | Status |
+| :--- | :--- | :--- | :--- |
+| **Code Review Auditor** | [`fresh-eye/`](fresh-eye/SKILL.md) | Performs pre-commit code quality, safety, and test coverage sanity audits on local diffs. | **Active** |
+| **Tests Generator** | [`tests-gen/`](tests-gen/SKILL.md) | Scaffolds language-specific, table-driven unit test suites without external AST dependencies. | **Active** |
+
+### 🚀 Delivery & Review
 
 | Skill | Directory | Primary Purpose | Status |
 | :--- | :--- | :--- | :--- |
 | **Commit Prepper** | [`prepare-commit/`](prepare-commit/SKILL.md) | Enforces staging hygiene, repository state audits, and drafts semantic commit specs. | **Active** |
-| **ADR Generator** | [`adr-gen/`](adr-gen/SKILL.md) | Standardizes architectural pivots and trade-off matrices with immutable indexing. | **Active** |
-| **Tests Generator** | [`tests-gen/`](tests-gen/SKILL.md) | Scaffolds language-specific, table-driven unit test suites without external AST dependencies. | **Active** |
-| **Plan Generator** | [`plan-gen/`](plan-gen/SKILL.md) | Scaffolds a local plan.md template to sequence PRs and coordinate execution steps to prevent goal drift. | **Active** |
-| **Code Review Auditor** | [`fresh-eye/`](fresh-eye/SKILL.md) | Performs pre-commit code quality, safety, and test coverage sanity audits on local diffs. | **Active** |
 | **PR Review & Verification** | [`pr-review/`](pr-review/SKILL.md) | Compares diffs against a base branch, verifies tests and builds, and drafts review reports. | **Active** |
-| **RCA Generator** | [`rca-gen/`](rca-gen/SKILL.md) | Standardizes incident post-mortem documentation and timelines under `docs/incidents/`. | **Active** |
+| **Work Log Generator** | [`work-log-gen/`](work-log-gen/SKILL.md) | Guides the incremental logging of engineering contributions, PRs, and architectural notes. | **Active** |
+
+### 🔍 Operations & Incident Triage
+
+| Skill | Directory | Primary Purpose | Status |
+| :--- | :--- | :--- | :--- |
 | **Issue Triage Generator** | [`triage-gen/`](triage-gen/SKILL.md) | Scaffolds local reproduction, fix, and verification tracking for upstream issues. | **Active** |
-
----
-
-## 📂 Folder Layout
-
-Every tool inside this repository follows a simple pattern:
-
-```text
-[tool-name]/
-└── SKILL.md            # The manual file telling the agent what to do
-```
-
-### 📖 The Manual (`SKILL.md`)
-
-This is a declarative text file that contains:
-
-- What the tool does.
-- The rules and constraints to follow.
-- A checklist to verify that everything works.
+| **RCA Generator** | [`rca-gen/`](rca-gen/SKILL.md) | Standardizes incident post-mortem documentation and timelines under `docs/incidents/`. | **Active** |
 
 ---
 
 ## 🔄 Orchestration Flow: Lifecycle of a Skill
 
 ```text
-                  [ Code changes are made ]
+                  [ Code changes initiated ]
                              │
                              ▼
-              [ AI agent reads SKILL.md manual ]
+              [ AI agent loads SKILL.md manual ]
                              │
                              ▼
-              [ Follow manual rules directly ]
+              [ Executes task constraints ]
                              │
                              ▼
-               [ Task is completed cleanly! ]
+              [ Verification & Linting Gate ]
+                 │                       │
+              (Pass)                  (Fail)
+                 │                       │
+                 │                       ▼
+                 │                [ Fix & Retry ]
+                 ▼
+      [ Clean, compliant state ]
 ```
-
----
-
-## 📥 How to Register Skills
-
-Instead of copying files, you register the folder path so the AI always reads the original source files. This prevents duplicate files and version drift.
-
-### 🔍 Workspace Auto-Discovery
-
-Modern AI tools scan your open folder automatically. If they find a `SKILL.md` file, they load it instantly. No setup command is needed.
-
-### 💻 Built-In Installer Commands
-
-Most platforms let you install skills by running a simple registration command pointing to the local folder or the remote GitHub repository URL:
-
-- **From GitHub:**
-
-  ```bash
-  agent skill install <repo-url> --path <folder-name>
-  ```
-
-- **From Your Machine:**
-
-  ```bash
-  agent skill install <local-folder-path>
-  ```
-
----
-
-## 📋 Platform Quick-Reference
-
-| Platform | Registration Method | How to Do It |
-| :--- | :--- | :--- |
-| **Agy** | User Directory / Project Path | **Project-Specific:** Copy the folder into your project agent folder: `cp -r [tool-name] .agents/skills/`<br>**Global:** Copy into the global skills path: `cp -r [tool-name] ~/.gemini/antigravity-cli/skills/[tool-name]` |
-| **Codex** | Chat Interface Installer | Type `$skill-installer` in the Codex chat window and provide the folder path to install. |
-| **GitHub Copilot** | GitHub CLI Extension | Install the skill directly using the GitHub CLI: <br>`gh skill install ./[tool-name]` |
