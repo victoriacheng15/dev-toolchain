@@ -49,6 +49,13 @@ When triaging a new issue, follow these procedural steps:
    - Outline the goal, architectural approach, and step-by-step tasks in `## Fix`.
    - Record verification commands, test output summaries, upstream compliance checks, and cleanup tasks in `## Verify`.
 
+5. **Mandatory Local Verification:**
+   - Never conclude whether an issue is fixed or broken based solely on reading code or commit history.
+   - Physically verify the behavior locally:
+     - **For Backend & Systems:** Compile binaries (`go build`, `cargo check`), run unit/integration tests (`go test ./...`, `cargo test`), or test against local containers/pods.
+     - **For Frontend & Web Clients:** Run production builds and typechecks (`npm run build`, `pnpm build`, `tsc --noEmit`), execute component/E2E test suites (`vitest`, `jest`, `playwright`), or run local dev server checks.
+   - Record the raw command and real execution output as proof in the issue file.
+
 ---
 
 ## Mandatory Issue Template Structure
@@ -110,5 +117,6 @@ Prior to completing the triage workflow, verify that:
 
 1. [ ] **Issue File Created:** The file `issue-[num].md` exists in the workspace root.
 2. [ ] **Reproduction Documented:** The `Bug Repro` section contains the reproduction command and failure logs.
-3. [ ] **Upstream Compliance Checked:** Commit sign-offs and linting checks are logged in `Verify`.
-4. [ ] **Workspace Cleaned:** All temporary reproduction stubs, scripts, and logs outside of source modifications are removed.
+3. [ ] **Local Verification Executed:** Build, tests, or live execution checks were physically run locally (backend compile/test/pod or frontend build/typecheck/E2E), with raw output recorded.
+4. [ ] **Upstream Compliance Checked:** Commit sign-offs and linting checks are logged in `Verify`.
+5. [ ] **Workspace Cleaned:** All temporary reproduction stubs, scripts, and logs outside of source modifications are removed.
